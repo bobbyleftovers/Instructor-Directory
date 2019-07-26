@@ -1,2 +1,2 @@
-# WP Plugin Boilerplate
-### Uses autoload for classes and namespaced classes/functions. Has stubs for Carbon Fields, REST-API, custom post types,  taxonomies, custom tables that integrate with Carbon Field declarations and more. Uses composer for some dependencies and Webpack for compiling assets. Works in PHP 7.2. 
+# WIP: Instructor/Studio Directory
+This plugin will create a searchable directory, which can be filtered using geolocation. It will also allow instrucotrs to ad their own profiles to the searchable posts. It requires the use of Advanced Custom Fields and a geolocation field extension for ACF that I created. It is namespaced to prevent crashing into other plugins and uses VueJS for the frontend.
