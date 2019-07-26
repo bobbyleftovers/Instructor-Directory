@@ -1,0 +1,213 @@
+/* css for single profile */
+.single {
+  .directory__wrap {
+    .post {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding-top: 0;
+      padding-bottom: 66px;
+
+      @media (--m) {
+        flex-wrap: nowrap;
+      }
+
+      .dir-post__image {
+        width: 280px;
+        margin: 0 auto;
+
+        @media (--m) {
+          min-width: 280px;
+        }
+
+        @media (--l) {
+          max-width: 544px;
+          width: 100%;
+          margin: 0;
+        }
+
+        .dir-post__image-inner {
+          @media (--m) {
+            top: 130px;
+            position: sticky;
+          }
+        }
+      }
+
+      .dir-post__content {
+        padding-top: 30px;
+        width: 100%;
+
+        @media (--m) {
+          padding-top: 10px;
+          padding-left: 20px;
+        }
+
+        .label {
+          font-size: 1rem;
+        }
+
+        .dir-single-content__header {
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+
+          @media (--l) {
+            flex-direction: row;
+          }
+
+          .title__wrap {
+            .title__h2 {
+              font-size: 3.2rem;
+            }
+
+            .label {
+              padding: 10px 0 30px 0;
+              margin-left: 1px;
+            }
+          }
+
+          .dir-single-content__header--social {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            margin-top: -0.42em;
+
+            .social-link {
+              margin-right: 10px;
+
+              .icon {
+                width: 1.7rem;
+                height: 1.7rem;
+                padding: 0.35em;
+              }
+            }
+          }
+        }
+
+        .dir-single-content__details {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          .dir-single-content__detail {
+            width: 100%;
+            padding-bottom: 15px;
+
+            .label {
+              height: 21px;
+            }
+
+            @media (--m) {
+              width: 50%;
+            }
+
+            @media (--xl) {
+              width: 33.3333%;
+            }
+
+            &.detail--address {
+              span,
+              a {
+                text-transform: capitalize;
+              }
+            }
+
+            &.detail--email,
+            &.detail--website {
+              a {
+                text-transform: lowercase;
+              }
+            }
+
+            &.detail--primary-studio .primary-studio__link {
+              text-transform: capitalize;
+            }
+          }
+        }
+
+        .dir-single-content--part {
+          padding-bottom: 20px;
+          padding-top: 20px;
+          border-bottom: 1px solid var(--c-light-grey);
+
+          &:first-of-type {
+            padding-top: 0;
+          }
+
+          &:last-of-type {
+            border-bottom: 0;
+          }
+
+          &.dir-single-content__certifications {
+            border: 0;
+            padding-bottom: 5px;
+
+            .certifications__badges {
+              margin-top: 8px;
+              display: flex;
+              flex-direction: row;
+
+              .certifications__badge {
+                margin-right: 8px;
+                height: 60px;
+                width: 60px;
+
+                &:last-of-type {
+                  margin-right: 0;
+                }
+              }
+            }
+          }
+
+          &.dir-single-content__about {
+            border-bottom: 0;
+
+            .label {
+              margin-bottom: 3px;
+            }
+          }
+        }
+
+        .dir-single-content__my-studios {
+          padding-top: 20px;
+
+          .my-studio__row {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 0 8px var(--c-light-grey);
+            margin-bottom: 20px;
+            padding: 15px;
+
+            .my-studio {
+              margin-bottom: 15px;
+
+              @media (--m) {
+                margin-bottom: 0;
+              }
+            }
+
+            @media (--m) {
+              flex-direction: row;
+              align-items: center;
+            }
+
+            .my-studio__link--map {
+              text-transform: capitalize;
+            }
+
+            .my-studio__name {
+              font-weight: 600;
+            }
+
+            .button {
+              padding: 15px 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

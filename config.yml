@@ -1,0 +1,4 @@
+production:
+  target: https://movement-by-lara.lndo.site
+development:
+  target: https://movement-by-lara.lndo.site

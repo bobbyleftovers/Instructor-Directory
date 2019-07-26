@@ -1,0 +1,188 @@
+/* css for cards */
+.barrel-directory__container {
+  .card {
+    width: 100%;
+    padding-bottom: 20px;
+
+    @media (--m) {
+      width: 50%;
+
+      &:nth-child(2n-1) {
+        padding-right: 10px;
+      }
+
+      &:nth-child(2n) {
+        padding-left: 10px;
+      }
+    }
+
+    @media (--ml) {
+      width: 33.33333%;
+      padding-bottom: 30px;
+
+      &:nth-child(2n) {
+        padding-left: 0;
+      }
+
+      &:nth-child(2n-1) {
+        padding-right: 0;
+      }
+
+      &:nth-child(3n - 2) {
+        padding-left: 0;
+        padding-right: 15px;
+      }
+
+      &:nth-child(3n - 1) {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      &:nth-child(3n) {
+        padding-left: 15px;
+        padding-right: 0;
+      }
+    }
+
+    .card__inner {
+      display: flex;
+      padding: 20px;
+      height: 100%;
+      justify-content: space-between;
+      flex-direction: column;
+      background-color: var(--c-white);
+      box-shadow: 0 0 15px var(--c-light-grey);
+
+      .card__image {
+        width: 100%;
+        height: 240px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .card__heading {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-top: 15px;
+        border-bottom: 1px solid var(--c-light-grey);
+        padding-bottom: 15px;
+
+        .card__title {
+          line-height: 1;
+          margin: 0;
+          font-size: 12px;
+
+          @media (--m) {
+            font-size: 16px;
+          }
+
+          .card__position.label {
+            margin-top: 6px;
+            display: block;
+          }
+        }
+
+        .card__social-icons {
+          min-width: 65px;
+          display: flex;
+          justify-content: flex-end;
+
+          a.card__social-link {
+            margin-left: 10px;
+
+            .icon {
+              height: 20px;
+              width: 16px;
+
+              &.icon--facebook {
+                width: 9px;
+              }
+            }
+          }
+        }
+      }
+
+      .card__details {
+        span,
+        a {
+          text-transform: lowercase;
+        }
+
+        &.card__details--studio {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          .card__address {
+            span {
+              text-transform: capitalize;
+            }
+          }
+
+          .card__instructors {
+            width: 100%;
+            min-height: 82px;
+
+            a {
+              text-transform: capitalize;
+            }
+          }
+        }
+
+        .card--item {
+          width: 100%;
+          padding-top: 15px;
+          padding-right: 10px;
+          line-height: 1.5;
+          hyphens: auto;
+
+          a,
+          span {
+            word-wrap: anywhere;
+          }
+
+          @media (--m) {
+            width: 50%;
+          }
+
+          .card-item__label {
+            line-height: 1.7;
+          }
+        }
+      }
+
+      .card__location {
+        .card__location--city {
+          text-transform: capitalize;
+        }
+
+        .card__location--state {
+          text-transform: uppercase;
+        }
+      }
+
+      .card__certification-icons {
+        margin-top: 5px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+        .icon {
+          margin-right: 8px;
+          width: 60px;
+          height: 60px;
+        }
+      }
+
+      .card__link {
+        margin-top: 15px;
+
+        .button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

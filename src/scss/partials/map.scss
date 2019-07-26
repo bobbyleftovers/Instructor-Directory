@@ -1,0 +1,84 @@
+.map {
+  .map__header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 60px;
+    padding-bottom: 40px;
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .icon {
+        width: 25px;
+        height: 14px;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  #map-display {
+    height: 400px;
+    width: 100%;
+    transition: height ease-out 0.3s;
+
+    &.closed {
+      height: 0;
+    }
+  }
+
+  .marker {
+    background-image: url('./svg/mapbox-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 29px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: height, width ease 0.25s;
+    z-index: 0;
+
+    &.active,
+    &.active:hover {
+      z-index: 1;
+      width: 38px;
+      height: 45px;
+    }
+
+    &:hover {
+      width: 32px;
+      height: 38px;
+    }
+  }
+
+  .map-type--instructor {
+    .marker {
+      background-image: url('./svg/instructor-pin.svg');
+    }
+  }
+
+  .mapboxgl-popup {
+    .mapboxgl-popup-content {
+      padding: 20px;
+
+      .mapboxgl-popup-close-button {
+        visibility: hidden;
+      }
+
+      .popup-data__head {
+        line-height: 1.8;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        color: var(--c-dark-grey);
+      }
+
+      .popup-data__subhead {
+        font-size: 1.1rem;
+        line-height: 2em;
+        margin-bottom: 4px;
+        color: var(--c-dark-grey);
+      }
+    }
+  }
+}

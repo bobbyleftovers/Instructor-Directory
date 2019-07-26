@@ -1,0 +1,35 @@
+.directory__wrap {
+  .image {
+    width: 100%;
+    position: relative;
+
+    .image__img {
+      object-position: 50% 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .image--cover,
+    .image--contain {
+      position: relative;
+    }
+
+    .image--cover {
+      background-size: cover;
+
+      .image__img {
+        object-fit: cover;
+      }
+    }
+
+    .image--contain {
+      background-size: contain;
+
+      .image__img {
+        object-fit: contain;
+      }
+    }
+  }
+}

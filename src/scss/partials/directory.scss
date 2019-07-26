@@ -1,0 +1,87 @@
+.barrel-directory__container {
+  /* css for main directory */
+  .directory__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .directory__results {
+    background: var(--c-med-grey-trans);
+    min-height: 20vh;
+
+    .directory__errors {
+      padding: 90px 0;
+      display: flex;
+      flex-direction: column;
+
+      .label {
+        margin-bottom: 8px;
+      }
+
+      .error-msg ul {
+        list-style: disc;
+
+        li {
+          margin-left: 30px;
+        }
+      }
+    }
+
+    .directory__cards {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 60px 0;
+    }
+  }
+
+  .directory__pagination {
+    text-align: center;
+    padding-bottom: 70px;
+
+    ul {
+      display: inline;
+
+      li {
+        display: inline;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+    }
+
+    .directory__pagination-link {
+      display: inline;
+      padding: 0 2px;
+
+      &:hover {
+        color: var(--c-red);
+      }
+
+      &.active {
+        color: var(--c-red-dark);
+      }
+
+      &.link--next,
+      &.link--prev {
+        color: #9d9c9c;
+        text-decoration: underline;
+        position: relative;
+
+        &:hover {
+          color: var(--c-red);
+        }
+      }
+
+      &.link--next::after {
+        content: ' >>';
+      }
+
+      &.link--prev::before {
+        content: '<< ';
+      }
+    }
+  }
+}

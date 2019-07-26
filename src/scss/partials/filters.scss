@@ -1,0 +1,269 @@
+.directory-loop__filters {
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .filter {
+    width: 100%;
+
+    &.filter--type {
+      border-bottom: 1px solid #e2dede;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+
+      .filter--heading {
+        display: inline;
+      }
+    }
+
+    &.filter--city {
+      width: 55%;
+    }
+
+    &.filter--radius {
+      width: 45%;
+      padding-left: 10px;
+    }
+  }
+
+  @media (--m) {
+    padding-bottom: 60px;
+    grid-column-gap: 25px;
+
+    .filter {
+      &.filter--radius {
+        width: 20%;
+        padding-left: 25px;
+      }
+
+      &.filter--search {
+        width: 25%;
+        padding-left: 25px;
+      }
+    }
+
+    .filter-copy {
+      padding: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+    }
+  }
+
+  @media (--ml) {
+    display: grid;
+    -ms-grid-columns: 18% 1px 28% auto 25% 1fr 1fr;
+    grid-template-columns: 18% 1px 28% auto 25% auto auto;
+    grid-gap: 0;
+
+    .filter {
+      width: 100%;
+      padding: 0 10px;
+
+      &.filter--type {
+        border-bottom: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        padding-left: 0;
+        grid-column-start: 1;
+        grid-column-end: 1;
+
+        .filter--heading {
+          display: block;
+        }
+      }
+
+      &.filter--keyword {
+        padding-left: 30px;
+        grid-column-start: 3;
+        grid-column-end: 3;
+      }
+
+      &.filter--city {
+        grid-column-start: 5;
+        grid-column-end: 5;
+        width: 100%;
+      }
+
+      &.filter--radius {
+        grid-column-start: 6;
+        grid-column-end: 6;
+        width: 100%;
+      }
+
+      &.filter--search {
+        padding-right: 0;
+        grid-column-start: 7;
+        grid-column-end: 7;
+        width: 100%;
+      }
+    }
+
+    .filter-copy {
+      justify-content: center;
+      grid-column-start: 4;
+      grid-column-end: 4;
+    }
+  }
+
+  .filter-divider {
+    display: none;
+    border-left: 1px solid var(--c-light-grey);
+
+    @media (--ml) {
+      display: block;
+      grid-column-start: 2;
+      grid-column-end: 2;
+    }
+  }
+
+  .filter-copy {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .filter-copy__copy {
+      margin-top: 12px;
+      margin-bottom: 12px;
+
+      @media (--ml) {
+        margin-top: 24px;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .filter__label {
+    line-height: 1.8;
+  }
+
+  .filter {
+    .filter__label {
+      font-weight: 600;
+    }
+
+    &.filter--search {
+      .button {
+        padding: 0.7em 40px;
+
+        @media (--m) {
+          padding: 1em 40px;
+        }
+      }
+    }
+
+    &.filter--type {
+      .filter__label {
+        line-height: 4.6rem;
+
+        &:last-of-type {
+          margin-left: 8px;
+        }
+      }
+    }
+
+    /* The container */
+    .radio-wrap {
+      display: inline;
+      position: relative;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      /* Create a custom radio button */
+      .radio-check {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 15px;
+        width: 15px;
+        background-color: var(--c-white);
+        border-radius: 50%;
+        border: 1px solid #333;
+
+        &::after {
+          content: "";
+          position: absolute;
+          display: none;
+          top: 2px;
+          left: 2px;
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: var(--c-red);
+        }
+      }
+
+      /* Hide the browser's default radio button */
+      input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+
+        /* When the radio button is checked, add a blue background */
+        &:checked ~ .radio-check {
+          background-color: var(--c-white);
+        }
+      }
+
+      input:checked ~ .radio-check::after {
+        display: block;
+      }
+    }
+
+    .input {
+      font-size: 13px;
+      margin: 0;
+
+      &.input__radio {
+        position: relative;
+        margin-left: 3px;
+
+        &::after {
+
+        }
+      }
+    }
+  }
+
+  .dropdown {
+    position: relative;
+    width: 100%;
+
+    .dropdown-header {
+      padding: 0.9em 1em;
+      line-height: 1;
+      border: 1px solid var(--c-med-grey);
+      height: 44px;
+    }
+
+    .dropdown-menu {
+      width: 100%;
+      border: 1px solid var(--c-med-grey);
+      background: var(--c-white);
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 5;
+
+      &.open {
+        display: block;
+      }
+    }
+
+    .dropdown-menu-item {
+      list-style: none;
+      padding: 0.8em 1em;
+      line-height: 1;
+      height: 42px;
+      width: 100%;
+
+      &:hover {
+        background: var(--c-lighter-grey);
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+.barrel-directory__container {
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 5%;
+    max-width: 1280px;
+
+    @media (--ml) {
+      padding: 0 10px;
+    }
+  }
+
+  .button {
+    background: var(--c-red);
+    color: var(--c-white);
+    text-align: center;
+
+    &.button--white {
+      background: var(--c-white);
+      color: var(--c-black);
+      border: 1px solid var(--c-black);
+    }
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  input {
+    padding: 1em;
+    border: 1px solid var(--c-med-grey);
+
+    &[type=text] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+  }
+}
+
+.placeholder-image {
+  background-image: url('./svg/image-placeholder.svg');
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+
+  .placeholder-image--cover {
+    background-size: cover;
+  }
+
+  .placeholder-image--contain {
+    background-size: contain;
+  }
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.hidden {
+  visibility: hidden;
+}

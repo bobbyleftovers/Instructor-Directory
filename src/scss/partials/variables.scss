@@ -1,0 +1,20 @@
+:root {
+  /* Colors */
+  --c-white: #fff;
+  --c-black: #000;
+  --c-dark-grey: #333;
+  --c-med-grey: #e2dede;
+  --c-med-grey-trans: rgba(226, 222, 222, 0.3);
+  --c-light-grey: #e2dede;
+  --c-lighter-grey: #fbf7f7;
+  --c-pinkish: #e3adb4;
+  --c-red: #b93142;
+  --c-red-dark: #9b1f2f;
+}
+
+@custom-media --s (min-width: 420px);
+@custom-media --ms (min-width: 540px);
+@custom-media --m (min-width: 769px);
+@custom-media --l (min-width: 1000px);
+@custom-media --ml (min-width: 1200px);
+@custom-media --xl (min-width: 1400px);
