@@ -1,5 +1,8 @@
 # WIP: Instructor/Studio Directory
-This plugin will create a searchable directory, which can be filtered using geolocation. It will also allow instrucotrs to register and add their own profiles to the searchable posts. A user role is added for instructors and they are not able to get into the actual admin area, rather a small admin area is created for them. It requires the use of Advanced Custom Fields and a [geolocation field extension](https://github.com/bobbyleftovers/acf-mapbox-field) for ACF that I created. It is namespaced to prevent crashing into other plugins and uses VueJS for the frontend.
+The request in front of me was to make a scalable solution for an instructo/studio finder for a yoga guru who taught other instructors. originally there was a specific plugin in mind for this idea but my argument in favor of a custom build was that the pre-built plugin A) did not have geo-location and B) was built with a very different purpose in mind. The client agreed.
+
+This plugin will create a simple but easily extandable directory of all certified instructors and studios that those instructors work in, all of which can be filtered using geolocation. It will also allow instrucotrs to register and add their own profiles to the searchable posts. A user role is added for instructors and they are not able to get into the actual admin area, rather a small admin area is created for them. It requires the use of Advanced Custom Fields and a [geolocation field extension](https://github.com/bobbyleftovers/acf-mapbox-field) for ACF that I created. It is namespaced to prevent crashing into other plugins and uses VueJS for the frontend.
+
 ## Dependencies:
 - Advanced Custom Fields 5+
 - Mapbox field type extension for ACF
@@ -29,6 +32,8 @@ This plugin will create a searchable directory, which can be filtered using geol
 - Template Registration: A page template registration process is included to allow page templates defined in the plugin to be added to the template cache and be used on any page. Single-post templates are added in a similar way.
 
 ### To-Do
-- Create an options page for settings
 - Consolidate all admin sidebar links under one main menu
 - Add a 'run page creator' workflow to the options page to make the creation ofthe plugins pages optional, as these page templates can be used anywhere.
+- Set up an activation hook to request where to place plugin pages.
+- Add "ACF required" warning.
+- Resetting password should log you in
