@@ -8,13 +8,27 @@ if ( ! defined( 'WPINC' ) ) {
 
 class Acf_Setup {
   public function __construct () {
-    $this->add_field_groups();
-    add_action('acf/pre_save_post', array($this, 'set_post_status', 20));
+    
+  }
+
+  public function init_register () {
+    // $this->add_field_groups();
+    // add_action('acf/pre_save_post', array($this, 'set_post_status'), 20);
+    add_action( 'acf/input/admin_enqueue_scripts', array($this, 'deregister_styles'), 100 );
+  }
+
+  public function deregister_styles() {
+    if(!is_admin()){
+      // wp_deregister_style( 'acf' );
+      // wp_deregister_style( 'acf-field-group' );
+      // wp_deregister_style( 'acf-global' );
+      // wp_deregister_style( 'acf-input' );
+      // wp_deregister_style( 'acf-datepicker' );
+      // wp_deregister_style( 'acf_pro_input' );
+    }
   }
 
   public function set_post_status( $post_id ) {
-    // make sure we don't have an infinite loop
-    // die('ok'.$post_id);
     wp_update_post([
       'post_id' => $post_id,
       'post_status' => 'publish'
@@ -50,7 +64,7 @@ class Acf_Setup {
                 'label' => 'Profile Image',
                 'name' => 'profile_image',
                 'type' => 'image',
-                'instructions' => '',
+                'instructions' => 'Choose images that are either square or landscape-style.',
                 'required' => 0,
                 'conditional_logic' => 0,
                 'wrapper' => array(
@@ -172,7 +186,7 @@ class Acf_Setup {
                 'name' => 'studio',
                 'type' => 'repeater',
                 'instructions' => '',
-                'required' => 0,
+                'required' => 1,
                 'conditional_logic' => 0,
                 'wrapper' => array(
                   'width' => '',
@@ -180,9 +194,9 @@ class Acf_Setup {
                   'id' => '',
                 ),
                 'collapsed' => '',
-                'min' => 0,
+                'min' => 1,
                 'max' => 0,
-                'layout' => 'table',
+                'layout' => 'row',
                 'button_label' => '',
                 'sub_fields' => array(
                   array(
@@ -199,8 +213,8 @@ class Acf_Setup {
                       'id' => '',
                     ),
                     'choices' => array(
-                      'default' => 'Enter the name and address of your studio',
-                      'lyt_studio' => 'Choose an LYT-certified Studio',
+                      'lyt_studio' => 'LYT Studio',
+                      'standard' => 'Standard Studio',
                     ),
                     'allow_null' => 0,
                     'other_choice' => 0,
@@ -215,7 +229,7 @@ class Acf_Setup {
                     'name' => 'lyt_studio',
                     'type' => 'post_object',
                     'instructions' => '',
-                    'required' => 0,
+                    'required' => 1,
                     'conditional_logic' => array(
                       array(
                         array(
@@ -251,13 +265,13 @@ class Acf_Setup {
                         array(
                           'field' => 'field_5cfaf848b9af5',
                           'operator' => '==',
-                          'value' => 'default',
+                          'value' => 'standard',
                         ),
                       ),
                     ),
                     'wrapper' => array(
                       'width' => '',
-                      'class' => '',
+                      'class' => 'studio-address__input',
                       'id' => '',
                     ),
                     'layout' => 'block',
@@ -268,10 +282,10 @@ class Acf_Setup {
                         'name' => 'studio_name',
                         'type' => 'text',
                         'instructions' => '',
-                        'required' => 0,
+                        'required' => 1,
                         'conditional_logic' => 0,
                         'wrapper' => array(
-                          'width' => '',
+                          'width' => '100',
                           'class' => '',
                           'id' => '',
                         ),
@@ -287,10 +301,10 @@ class Acf_Setup {
                         'name' => 'studio_street',
                         'type' => 'text',
                         'instructions' => '',
-                        'required' => 0,
+                        'required' => 1,
                         'conditional_logic' => 0,
                         'wrapper' => array(
-                          'width' => '',
+                          'width' => '100',
                           'class' => '',
                           'id' => '',
                         ),
@@ -306,10 +320,10 @@ class Acf_Setup {
                         'name' => 'studio_city',
                         'type' => 'text',
                         'instructions' => '',
-                        'required' => 0,
+                        'required' => 1,
                         'conditional_logic' => 0,
                         'wrapper' => array(
-                          'width' => '33.33',
+                          'width' => '100',
                           'class' => '',
                           'id' => '',
                         ),
@@ -325,14 +339,15 @@ class Acf_Setup {
                         'name' => 'studio_state',
                         'type' => 'select',
                         'instructions' => '',
-                        'required' => 0,
+                        'required' => 1,
                         'conditional_logic' => 0,
                         'wrapper' => array(
-                          'width' => '33.33',
+                          'width' => '50',
                           'class' => '',
                           'id' => '',
                         ),
                         'choices' => array(
+                          'Select Your State' => 'Select Your State',
                           'AL' => 'Alabama',
                           'AK' => 'Alaska',
                           'AZ' => 'Arizona',
@@ -400,10 +415,10 @@ class Acf_Setup {
                         'name' => 'studio_postal_code',
                         'type' => 'text',
                         'instructions' => '',
-                        'required' => 0,
+                        'required' => 1,
                         'conditional_logic' => 0,
                         'wrapper' => array(
-                          'width' => '33.33',
+                          'width' => '50',
                           'class' => '',
                           'id' => '',
                         ),
@@ -427,7 +442,7 @@ class Acf_Setup {
                         array(
                           'field' => 'field_5cfaf848b9af5',
                           'operator' => '==',
-                          'value' => 'default',
+                          'value' => 'standard',
                         ),
                       ),
                     ),
@@ -597,8 +612,8 @@ class Acf_Setup {
               ),
               array(
                 'key' => 'field_5cfc0ca8e792d',
-                'label' => 'LinkedIn Profile',
-                'name' => 'linkedin_profile',
+                'label' => 'YouTube Profile',
+                'name' => 'youtube_profile',
                 'type' => 'url',
                 'instructions' => '',
                 'required' => 0,
@@ -733,6 +748,11 @@ class Acf_Setup {
             'mapbox_access_token' => 'pk.eyJ1Ijoicm9iZXJ0cmFlIiwiYSI6ImNqdndhOHFmejRhczYzeW9qYjJrMGQzY3QifQ.OZag22deq5xysi6cQuAEMw',
             'mapbox_map_style' => 'mapbox://styles/robertrae/cjvwoe8bp5bd91cqi6x6bkdjc',
             'height' => 400,
+            'zzzheight' => 676666,
+            'marker' => 1261,
+            'required_address_fields' => array(
+              0 => 'city',
+            ),
           ),
           array(
             'key' => 'field_5cfaf7a2f3061',
@@ -869,8 +889,8 @@ class Acf_Setup {
               ),
               array(
                 'key' => 'field_5cfc0d0b06a38',
-                'label' => 'LinkedIn Profile',
-                'name' => 'linkedin_profile',
+                'label' => 'YouTube Profile',
+                'name' => 'youtube_profile',
                 'type' => 'url',
                 'instructions' => '',
                 'required' => 0,
@@ -923,7 +943,7 @@ class Acf_Setup {
               'id' => '',
             ),
             'post_type' => array(
-              0 => 'member',
+              0 => 'instructor',
             ),
             'taxonomy' => '',
             'allow_null' => 0,
@@ -949,7 +969,6 @@ class Acf_Setup {
         'hide_on_screen' => '',
         'active' => true,
         'description' => '',
-        'modified' => 1562076878,
       ));
       
       endif;

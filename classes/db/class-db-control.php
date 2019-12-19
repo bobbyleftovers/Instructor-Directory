@@ -16,8 +16,10 @@ class Db_Control{
     $this->table_name = $wpdb->prefix . ENTRY_TABLE_NAME;
   }
 
-  public function insert ( $post_id, $data ) {
+  public function insert ( $data ) {
     global $wpdb;
+    echo $this->table_name    .' -> ';
+    var_dump($data);
     return $wpdb->insert($this->table_name, $data);
   }
 
@@ -35,6 +37,7 @@ class Db_Control{
 
   public function find ( $id, $column_names = '*' ) {
     global $wpdb;
+    if(!$id) return false;
     $sql = '
       SELECT ' . $column_names . '
       FROM ' . $this->table_name . '

@@ -1,37 +1,114 @@
-.refister-form {
+.register-form {
+  margin-bottom: 80px;
+
   .directory__register.admin-form {
     width: 100%;
     max-width: 420px;
     margin: 0 auto;
-
-    label {
-      display: block;
-      margin-bottom: 15px;
-    }
-
-    input {
-      display: block;
-      margin-bottom: 30px;
-    }
-
-    .button {
-      padding: 1.4em 1em;
-    }
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
     .registration__input {
+      label {
+        display: block;
+        margin-bottom: 15px;
+      }
+
       input {
-        width: 100%;
+        display: block;
+      }
+
+      .button {
+        padding: 1.4em 1em;
+      }
+
+      &.registration__input--pass,
+      &.registration__input--email {
+        margin-top: 30px;
+      }
+
+      &.registration__input--lname {
+        .form-error__span {
+          left: 13px;
+        }
+      }
+
+      &.registration__input--checkbox {
+        margin-top: 30px;
+        margin-bottom: 15px;
+
+        label {
+          padding-left: 25px;
+          font-family: var(--font-body);
+          text-transform: none;
+          font-weight: normal;
+        }
+
+        .checkbox-wrap {
+          display: inline;
+          position: relative;
+          cursor: pointer;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+
+          .checkbox-check {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 15px;
+            width: 15px;
+            background-color: var(--c-white);
+            border: 1px solid var(--c-dark-grey);
+
+            &::after {
+              content: "";
+              position: absolute;
+              display: none;
+              top: 2px;
+              left: 2px;
+              width: 9px;
+              height: 9px;
+              background: var(--c-red);
+            }
+          }
+
+          input {
+            position: absolute;
+            z-index: 100;
+            opacity: 0;
+            cursor: pointer;
+
+            &:checked ~ .checkbox-check {
+              background-color: var(--c-white);
+            }
+          }
+
+          input:checked ~ .checkbox-check::after {
+            display: block;
+          }
+        }
+
+        .input {
+          font-size: 13px;
+          margin: 0;
+
+          &.input__checkbox {
+            position: relative;
+            margin-left: 3px;
+          }
+        }
       }
     }
 
-    .login__bottom-link {
-      text-align: center;
-      line-height: 3rem;
-      display: block;
+    .registration__errors {
+      padding-top: 15px;
+    }
 
-      &.login__bottom-link--home {
-        margin-top: 30px;
-      }
+    .admin-form__bottom-link {
+      margin-top: 35px;
     }
   }
 }

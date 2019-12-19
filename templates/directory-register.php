@@ -14,18 +14,16 @@ if ( in_array( 'instructor', (array) $user->roles ) ) {
 }
 
 get_header();?>
-<main id="main_content" tabindex="-1">
+<main id="main_content" class="directory__wrap" tabindex="-1">
   <section class="barrel-directory__container"><?php
     Lib::the_plugin_module('directory-header', array(
       'title' => 'Create An Account',
-      'title_class' => 'main-title',
-      'add_link' => false
+      'title_class' => 'h2 main-title--admin',
+      'wrapper_classes' => 'directory__header--login'
     ));?>
     <div class="container">
-      <div class="login-register">
-        <div class="directory__registration form"><?php
+      <div class="directory__registration form"><?php
         Lib::the_plugin_module('register-form');?>
-        </div>
       </div>
     </div>
   </section>

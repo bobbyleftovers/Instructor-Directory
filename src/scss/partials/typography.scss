@@ -15,8 +15,8 @@
     font-size: 12px;
   }
 
-  .label {
-    font-size: 10px;
+  .paragraph {
+    font-size: 12px;
   }
 
   @media (--m) {
@@ -31,33 +31,44 @@
     .sub-heading {
       font-size: 13px;
     }
+
+    /* theme-side .h2 class breaks at 769px, let's adjust that here */
+    .h2 {
+      font-size: 3.5rem;
+    }
   }
 
-  @media (--xl) {
+  @media (--l) {
     .main-title {
       font-size: 50px;
     }
 
     .secondary-title {
-      font-size: 35px;
+      font-size: 32px;
     }
 
+    .paragraph {
+      font-size: 13px;
+    }
+  }
+
+  @media (--xl) {
     .main-heading {
       font-size: 24px;
     }
+  }
 
-    /*
-    .sub-heading {
-      font-size: 16px;
-    }
-    */
+  &.account-admin {
+    .h2 {
+      font-size: 1.7rem;
 
-    .label {
-      font-size: 11px;
-    }
+      @media (--m) {
+        font-size: 2.3rem;
+      }
 
-    .input {
-      font-size: 12px;
+      @media (--l) {
+        font-size: 3.2rem;
+      }
     }
   }
 }

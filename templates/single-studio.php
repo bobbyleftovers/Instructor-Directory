@@ -41,18 +41,10 @@ get_header(); ?>
     Lib::the_plugin_module('directory-header', array(
       'title' => 'Directory',
       'title_class' => 'main-title',
-      'add_link' => true,
-      'link_url' => site_url().'/directory',
-      'link_text' => __('Back to All', 'mvl')
+      'left_link_url' => site_url().'/directory',
+      'left_link_copy' => __('Back to All', 'mvl'),
+      'wrapper_classes' => 'directory__header--grid'
     ));?>
-    <!-- <section class="container">
-      <div class="directory__header">
-        <h1 class="text-center main-title">Directory</h1>
-        <a href="<?= site_url() ?>/directory" class="label back-link">
-          <span class="back-link-text"><span class="icon icon--angle-left"></span><?= __('Back to All', 'mvl'); ?></span>
-        </a>
-      </div>
-    </section> -->
     <section class="post container">
       <div class="dir-post__image">
         <div class="dir-post__image-inner">
@@ -83,55 +75,65 @@ get_header(); ?>
                 </a><?php
               }
               if($row->social_media_twitter_profile){?>
-                <a class="social-link" href="<?= $row->social_media_twitter_profile ?>" title="<?= __('Twitter', 'mvl'); ?>">
+                <a class="social-link" target="_blank" href="<?= $row->social_media_twitter_profile ?>" title="<?= __('Twitter', 'mvl'); ?>">
                   <span class="icon icon--twitter"></span>
                 </a><?php
               }
               if($row->social_media_youtube_profile){?>
-                <a class="social-link" href="<?= $row->social_media_youtube_profile ?>" title="<?= __('YouTube', 'mvl'); ?>">
+                <a class="social-link" target="_blank" href="<?= $row->social_media_youtube_profile ?>" title="<?= __('YouTube', 'mvl'); ?>">
                   <span class="icon icon--youtube"></span>
                 </a><?php
               }?>
             </div>
           </div>
-          <div class="dir-single-content__details dir-single-content--part"><?php
-            if($row->address_city && $row->address_state) {?>
-              <div class="dir-single-content__detail detail--address">
-                <h5 class="label">Address</h5>
+          <div class="dir-single-content__details dir-single-content--part dir-single-content__details--studio">
+            <div class="dir-single-content__detail detail--address">
+              <h5 class="label">Address</h5><?php
+              if($row->address_city && $row->address_state) {?>
                 <a href="<?= Tmpl::get_gmaps_search_link(get_the_title(get_sub_field('lyt_studio')).' '.$row->address_street.' '.$row->address_city.', '.$row->address_state.' '.$row->address_postal_code) ?>" target="_blank">
                   <?= $row->address_street.'<br>'.$row->address_city.', '.$row->address_state.' '.$row->address_postal_code ?>
-                </a>
-              </div><?php
-            }
-            if($row->contact_info_phone) {?>
-              <div class="dir-single-content__detail detail--phone">
-                <h5 class="label">Phone</h5>
-                <a href="tel:<?=urlencode($row->contact_info_phone)?>"><span><?=Tmpl::formatted_phone($row->contact_info_phone)?></span></a>
-              </div><?php
-            }
-            if($studio_languages) { ?>
-              <div class="dir-single-content__detail detail--language">
-                  <h5 class="label">Languages</h5>
-                  <span class="detail__languages"><?php
-                    for($i = 0; $i < sizeof($studio_languages); $i++){
-                      echo $studio_languages[$i];
-                      echo ($i === sizeof($studio_languages) - 1) ? '' : ', ';
-                    }?>
-                  </span>
-              </div><?php
-            }
-            if($row->contact_info_website){ ?>
-              <div class="dir-single-content__detail detail--website">
-                  <h5 class="label">Website</h5>
-                  <a href="<?=$row->contact_info_website?>" target="_blank"><span><?= Tmpl::formatted_website($row->contact_info_website)?></span></a>
-              </div><?php
-            }
-            if($row->contact_info_email){ ?>
-              <div class="dir-single-content__detail detail--email">
-                  <h5 class="label">Email</h5>
-                  <a href="mailto:<?=$row->contact_info_email?>"><span><?=$row->contact_info_email?></span></a>
-              </div><?php
-            }?>
+                </a><?php
+              } else {
+                echo '<span>N/A</span>';
+              }?>
+            </div>
+            <div class="dir-single-content__detail detail--website">
+              <h5 class="label">Website</h5><?php
+              if($row->contact_info_website){ ?>
+                <a href="<?=$row->contact_info_website?>" target="_blank"><span><?= Tmpl::formatted_website($row->contact_info_website)?></span></a><?php
+              } else {
+                echo '<span>N/A</span>';
+              }?>
+            </div>
+            <div class="dir-single-content__detail detail--phone">
+              <h5 class="label">Phone</h5><?php
+              if($row->contact_info_phone) {?>
+                <a href="tel:<?=urlencode($row->contact_info_phone)?>"><span><?=Tmpl::formatted_phone($row->contact_info_phone)?></span></a><?php
+              } else {
+                echo '<span>N/A</span>';
+              }?>
+            </div>
+            <div class="dir-single-content__detail detail--email">
+              <h5 class="label">Email</h5><?php
+              if($row->contact_info_email){ ?>
+                <a href="mailto:<?=$row->contact_info_email?>"><span><?=$row->contact_info_email?></span></a><?php
+              } else {
+                echo '<span>N/A</span>';
+              }?>
+            </div>
+            <div class="dir-single-content__detail detail--language">
+              <h5 class="label">Languages</h5><?php
+              if($studio_languages) { ?>
+                <span class="detail__languages"><?php
+                  for($i = 0; $i < sizeof($studio_languages); $i++){
+                    echo $studio_languages[$i];
+                    echo ($i === sizeof($studio_languages) - 1) ? '' : ', ';
+                  }?>
+                </span><?php
+              } else {
+                echo '<span>N/A</span>';
+              }?>
+            </div>
           </div><?php
           if($row->basic_info_about) { ?>
             <div class="dir-single-content__about dir-single-content--part">
@@ -139,7 +141,7 @@ get_header(); ?>
               <?= wpautop( $row->basic_info_about, true )?>
             </div><?php
           }?>
-          <div class="dir-single-content__about dir-single-content--part">
+          <div class="dir-single-content__instructors dir-single-content--part">
             <h5 class="label">Current LYT Certified Teachers</h5>
             <?= $teachers_output ?>
           </div>

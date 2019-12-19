@@ -1,4 +1,3 @@
-// console.log(theme_vars) // eslint-disable-line
 // const barrelModulePath = `${theme_vars.style_dir}` // eslint-disable-line
 
 let __cache = {}

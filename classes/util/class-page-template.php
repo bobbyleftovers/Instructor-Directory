@@ -59,7 +59,8 @@ class Page_Template {
       'directory-admin.php' => 'Directory - Account/Admin',
       'directory-login.php' => 'Directory - Login',
       'directory-register.php' => 'Directory - Register',
-      'directory-password-reset.php' => 'Directory - Password Reset',
+      'directory-password-reset-request.php' => 'Directory - Password Reset Request',
+      'directory-password-reset-form.php' => 'Directory - Password Reset Form',
       'directory-account-main.php' => 'Directory - Account (main)',
       'directory-account-editor.php' => 'Directory - Account (profile editor)',
       'directory-account-location-editor.php' => 'Directory - Account (location editor)'
@@ -180,7 +181,7 @@ class Page_Template {
       'post_author'   => 1,
       'page_template' => 'directory-front-end-template.php'
     );
-    $query = new WP_Query( array('name' => 'directory' ));
+    $query = new WP_Query( array('name' => 'directory', 'post_type' => 'page' ));
     if ( ! $query->have_posts() ) {
       $directory_id = wp_insert_post( $directory, $error_obj );
     } else {
@@ -200,9 +201,9 @@ class Page_Template {
       'post_type'     => 'page',
       'post_parent'   => $directory_id,
       'post_author'   => 1,
-      'page_template' => 'directory-login-template.php'
+      'page_template' => 'directory-login.php'
     );
-    $query = new WP_Query( array('name' => 'login' ));
+    $query = new WP_Query( array('name' => 'login', 'post_type' => 'page' ));
     if ( ! $query->have_posts() ) {
       $login_id = wp_insert_post( $login, $error_obj );
     }
@@ -213,24 +214,37 @@ class Page_Template {
       'post_type'     => 'page',
       'post_parent'   => $directory_id,
       'post_author'   => 1,
-      'page_template' => 'directory-admin-template.php'
+      'page_template' => 'directory-register.php'
     );
     $query = new WP_Query( array('name' => 'register', 'post_type' => 'page') );
     if ( ! $query->have_posts() ) {
       $register_id = wp_insert_post( $register, $error_obj );
     }
 
-    $pw_reset = array(
-      'post_title'    => 'Password Reset',
+    $pw_reset_req = array(
+      'post_title'    => 'Password Reset Request',
       'post_status'   => 'publish',
       'post_type'     => 'page',
       'post_parent'   => $directory_id,
       'post_author'   => 1,
-      'page_template' => 'directory-admin-template.php'
+      'page_template' => 'directory-password-reset-request.php'
     );
-    $query = new WP_Query( array('name' => 'password-reset' ));
+    $query = new WP_Query( array('name' => 'password-reset-request', 'post_type' => 'page' ));
     if ( ! $query->have_posts() ) {
-      $pw_reset_id = wp_insert_post( $pw_reset, $error_obj );
+      $pw_reset_id = wp_insert_post( $pw_reset_req, $error_obj );
+    }
+
+    $pw_reset_form = array(
+      'post_title'    => 'Password Reset Form',
+      'post_status'   => 'publish',
+      'post_type'     => 'page',
+      'post_parent'   => $directory_id,
+      'post_author'   => 1,
+      'page_template' => 'directory-password-reset-form.php'
+    );
+    $query = new WP_Query( array('name' => 'password-reset-form', 'post_type' => 'page' ));
+    if ( ! $query->have_posts() ) {
+      $pw_reset_id = wp_insert_post( $pw_reset_form, $error_obj );
     }
 
     $account_main = array(
@@ -239,9 +253,9 @@ class Page_Template {
       'post_type'     => 'page',
       'post_parent'   => $directory_id,
       'post_author'   => 1,
-      'page_template' => 'directory-admin-template.php'
+      'page_template' => 'directory-account-main.php'
     );
-    $query = new WP_Query( array('name' => 'my-account' ));
+    $query = new WP_Query( array('name' => 'my-account', 'post_type' => 'page' ));
     if ( ! $query->have_posts() ) {
       $account_main_id = wp_insert_post( $account_main, $error_obj );
     } else {
@@ -261,9 +275,9 @@ class Page_Template {
       'post_type'     => 'page',
       'post_parent'   => $account_main_id,
       'post_author'   => 1,
-      'page_template' => 'directory-admin-template.php'
+      'page_template' => 'directory-account-editor.php'
     );
-    $query = new WP_Query( array('name' => 'profile-editor' ));
+    $query = new WP_Query( array('name' => 'profile-editor', 'post_type' => 'page' ));
     if ( ! $query->have_posts() ) {
       $profile_editor_id = wp_insert_post( $profile_editor, $error_obj );
     }
@@ -274,9 +288,9 @@ class Page_Template {
       'post_type'     => 'page',
       'post_parent'   => $account_main_id,
       'post_author'   => 1,
-      'page_template' => 'directory-admin-template.php'
+      'page_template' => 'directory-account-location-editor.php'
     );
-    $query = new WP_Query( array('name' => 'location-editor' ));
+    $query = new WP_Query( array('name' => 'location-editor', 'post_type' => 'page' ));
     if ( ! $query->have_posts() ) {
       $location_editor_id = wp_insert_post( $location_editor, $error_obj );
     }

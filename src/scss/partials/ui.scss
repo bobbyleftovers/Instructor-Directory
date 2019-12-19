@@ -3,7 +3,7 @@
     width: 100%;
     margin: 0 auto;
     padding: 0 5%;
-    max-width: 1280px;
+    max-width: 1200px;
 
     @media (--ml) {
       padding: 0 10px;
@@ -14,27 +14,27 @@
     background: var(--c-red);
     color: var(--c-white);
     text-align: center;
+    padding: 1em 40px;
+    -webkit-appearance: none;
+    transition: all 0.25s ease-in-out;
 
     &.button--white {
       background: var(--c-white);
       color: var(--c-black);
       border: 1px solid var(--c-black);
+
+      &:hover {
+        background: var(--c-red);
+      }
+    }
+
+    &:hover {
+      background: var(--c-red-dark);
     }
   }
 
   .text-center {
     text-align: center;
-  }
-
-  input {
-    padding: 1em;
-    border: 1px solid var(--c-med-grey);
-
-    &[type=text] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
   }
 }
 
@@ -57,6 +57,22 @@
   width: 100%;
 }
 
+.w-50 {
+  width: 50%;
+}
+
+.pad-right {
+  padding-right: 15px;
+}
+
+.pad-left {
+  padding-left: 15px;
+}
+
 .hidden {
   visibility: hidden;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

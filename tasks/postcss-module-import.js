@@ -6,11 +6,9 @@ const globby = require('globby')
 
 const getAllModules = () => {
   const modules = process.cwd() + '/modules/**/**.scss'
-  console.log('modules', modules)
   return globby(modules)
     .then(files => {
       const res = files.map(f => path.normalize(f))
-      console.log('res', res)
       return res
     })
 }

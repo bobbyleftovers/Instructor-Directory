@@ -1,7 +1,6 @@
 <script>
   export default {
     props: {
-      meta: Object,
       title: String,
       email: String,
       image: String,
@@ -13,18 +12,6 @@
       type: String,
       row: Object
     },
-    // data () {
-    //   return {
-    //     meta: this.meta,
-    //     title: this.title,
-    //     email: this.email,
-    //     image: this.image,
-    //     route: this.route,
-    //     certifications: Array,
-    //     type: String,
-    //     row: Object
-    //   }
-    // },
     methods: {
       getSVG: function (name) {
         return window.location.protocol + '//' + window.location.hostname + '/wp-content/plugins/barrel-directory/src/svg/' + name
@@ -85,51 +72,64 @@
           <a v-if="row.social_media_facebook_profile" :href="row.social_media_facebook_profile" class="card__social-link" target="_blank">
             <span class="icon icon--facebook contain"></span>
           </a>
+          <span class="card__empty" v-else>&nbsp;</span>
           <a v-if="row.social_media_instagram_profile" :href="row.social_media_instagram_profile" class="card__social-link" target="_blank">
             <span class="icon icon--instagram contain"></span>
           </a>
+          <span class="card__empty" v-else>&nbsp;</span>
           <a v-if="row.social_media_twitter_profile" :href="row.social_media_twitter_profile" class="card__social-link" target="_blank">
             <span class="icon icon--twitter contain"></span>
           </a>
+          <span class="card__empty" v-else>&nbsp;</span>
+          <a v-if="row.social_media_youtube_profile" :href="row.social_media_youtube_profile" class="card__social-link" target="_blank">
+            <span class="icon icon--youtube contain"></span>
+          </a>
+          <span class="card__empty" v-else>&nbsp;</span>
         </div>
       </div>
       <div class="card__details card__details--instructor" v-if="type === 'instructor'">
         <div class="card__location card--item">
           <h4 class="card-item__label label">Location</h4>
-          <p><span class="card__location--city">{{row.address_city}}</span>, <span class="card__location--state">{{row.address_state}}</span></p>
+          <span class="card__empty" v-if="!row.address_city && !row.address_state">N/A</span>
+          <span v-else class="paragraph card__location--city">{{row.address_city}}</span>, <span class="paragraph card__location--state">{{row.address_state}}</span>
         </div>
         <div class="card__contact card--item">
           <h4 class="card-item__label label">Contact</h4>
-          <a :href="'mailto:' + email">{{email}}</a>
+          <span class="card__empty" v-if="!email">N/A</span>
+          <a v-else :href="'mailto:' + email">{{email}}</a>
         </div>
         <div class="card__certifications card--item">
           <h4 class="card-item__label label">LYT Certifications</h4>
           <div class="card__certification-icons">
-            <div v-for="(cert, i) in certifications" :key="i" :class="'icon icon--' + cert.slug + ' contain'" />
+            <span class="card__empty" v-if="certifications.length === 0">N/A</span>
+            <div v-if="certifications.length > 0" v-for="(cert, i) in certifications" :key="i" :class="'icon icon--' + cert.slug + ' contain'" />
           </div>
         </div>
       </div>
       <div class="card__details card__details--studio" v-if="type === 'studio'">
         <div class="card__address card--item">
           <h4 class="card-item__label label">Address</h4>
-          <span>{{row.address_street}} {{row.address_apt}}<br>
+          <span class="paragraph">{{row.address_street}} {{row.address_apt}}<br>
           {{row.address_city}}, {{row.address_state}} {{row.address_zip}}</span>
         </div>
         <div class="card__site card--item" v-if="row.contact_info_website">
           <h4 class="card-item__label label">Website</h4>
-          <a :href="row.contact_info_website" target="_blank">{{displaySiteURL(row.contact_info_website)}}</a>
+          <span class="card__empty" v-if="!row.contact_info_website">N/A</span>
+          <a class="paragraph" :href="row.contact_info_website" target="_blank">{{displaySiteURL(row.contact_info_website)}}</a>
         </div>
         <div class="card__email card--item" v-if="row.contact_info_email" lang="en">
           <h4 class="card-item__label label">Email</h4>
-          <a :href="'mailto:' + row.contact_info_email">{{row.contact_info_email}}</a>
+          <span class="card__empty" v-if="!row.contact_info_email">N/A</span>
+          <a class="paragraph" :href="'mailto:' + row.contact_info_email">{{row.contact_info_email}}</a>
         </div>
         <div class="card__phone card--item" v-if="row.contact_info_phone">
           <h4 class="card-item__label label">Phone</h4>
-          <a :href="'tel:+1' + row.contact_info_phone"><span class="">{{displayPhone(row.contact_info_phone)}}</span></a>
+          <span class="card__empty" v-if="!row.contact_info_phone">N/A</span>
+          <a class="paragraph" :href="'tel:+1' + row.contact_info_phone"><span class="">{{displayPhone(row.contact_info_phone)}}</span></a>
         </div>
         <div class="card__instructors card--item" v-if="row.basic_info_lyt_instructors.length > 0">
           <h4 class="card-item__label label">Current LYT-Certified Teachers</h4>
-          <a :href="instructor.permalink" v-for="(instructor, i) in row.basic_info_lyt_instructors" :key="i">{{instructor.title}}<span v-if="i < row.basic_info_lyt_instructors.length - 1">, </span></a>
+          <a class="paragraph" :href="instructor.permalink" v-for="(instructor, i) in row.basic_info_lyt_instructors" :key="i">{{instructor.title}}<span v-if="i < row.basic_info_lyt_instructors.length - 1">, </span></a>
         </div>
       </div>
       <div class="card__link">

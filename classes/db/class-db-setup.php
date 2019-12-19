@@ -36,7 +36,7 @@ class Db_Setup {
       social_media_facebook_profile text,
       social_media_instagram_profile text,
       social_media_twitter_profile text,
-      social_media_linkedin_profile text,
+      social_media_youtube_profile text,
       PRIMARY KEY  id (id)
     ) $charset_collate;";
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

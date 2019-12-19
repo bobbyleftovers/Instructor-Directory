@@ -11,8 +11,8 @@
       return {
         entries: this.entries,
         map: null,
-        key: 'pk.eyJ1Ijoicm9iZXJ0cmFlIiwiYSI6ImNqdndhOHFmejRhczYzeW9qYjJrMGQzY3QifQ.OZag22deq5xysi6cQuAEMw',
-        style: 'mapbox://styles/robertrae/cjvwoe8bp5bd91cqi6x6bkdjc',
+        key: theme_vars.mapbox.key,
+        style: theme_vars.mapbox.style,
         container: 'map-display',
         zoom: 14,
         mapLoading: true,
@@ -65,7 +65,7 @@
               title: entry.title,
               subhead: 'Address',
               address1: entry.row.address_street,
-              address2: `${entry.row.address_city}, ${entry.row.address_state} ${entry.row.address_postal_code}`,
+              address2: `<span class="capitalize">${entry.row.address_city}</span>, ${entry.row.address_state} ${entry.row.address_postal_code}`,
               permalink: entry.permalink,
               slug: entry.slug
             }
@@ -78,7 +78,6 @@
         this.markerJSON = geoJSON
       },
       buildMap: function () {
-        console.log(this.mapCenter)
         mapboxgl.accessToken = this.key
         this.map = new mapboxgl.Map({
           container: this.container,
@@ -104,7 +103,7 @@
 
           // add copy for each of the two post types
           let copy = `<div id="popup-${marker.properties.slug}" class="popup-data" data-slug="${marker.properties.slug}"><h4 class="popup-data__head">${marker.properties.title}</h4> <h5 class="popup-data__subhead">${marker.properties.subhead}</h5>`
-          copy += (type === 'instructor') ? `<a href="mailto:${marker.properties.email}">${marker.properties.email}</a><br><a href="${marker.properties.permalink}">View Full Bio</a></div>` : `<p>${marker.properties.address1}<br>${marker.properties.address2}</p><a href="${marker.properties.permalink}">More Info</a></div>`
+          copy += (type === 'instructor') ? `<a href="mailto:${marker.properties.email}">${marker.properties.email}</a><br><a href="${marker.properties.permalink}" class="popup-data__link">View Full Bio</a></div>` : `<p>${marker.properties.address1}<br>${marker.properties.address2}</p><a href="${marker.properties.permalink}" class="popup-data__link">More Info</a></div>`
           
           // create the popup
           const popup = new mapboxgl.Popup({
@@ -168,8 +167,8 @@
   <div class="map">
     <div class="map__header">
       <div class="map-header--info">
-        <b>Search Results</b><br>
-        <span>{{entries.length}} {{(entries.length > 1) ? 'results' : 'result'}} for {{type}}s in {{location}}</span>
+        <span class="label">Search Results</span><br>
+        <span>{{entries.length}} {{(entries.length > 1) ? 'search results' : 'search result'}} for {{type}}s in {{location}}</span>
       </div>
       <div class="map-header--clear">
         <button class="button button--white" v-on:click="mapButtonClick()"><span class="icon contain icon--map"></span> {{buttonCopy}}</button>

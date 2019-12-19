@@ -16,7 +16,7 @@
       }
     }
 
-    @media (--ml) {
+    @media (--l) {
       width: 33.33333%;
       padding-bottom: 30px;
 
@@ -55,10 +55,14 @@
 
       .card__image {
         width: 100%;
-        height: 240px;
+        height: 180px;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
+
+        @media (--ml) {
+          height: 240px;
+        }
       }
 
       .card__heading {
@@ -68,6 +72,18 @@
         padding-top: 15px;
         border-bottom: 1px solid var(--c-light-grey);
         padding-bottom: 15px;
+
+        @media (--m) {
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+        }
+
+        @media (--ml) {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: auto;
+        }
 
         .card__title {
           line-height: 1;
@@ -85,16 +101,29 @@
         }
 
         .card__social-icons {
-          min-width: 65px;
           display: flex;
           justify-content: flex-end;
 
           a.card__social-link {
+            margin-top: 0;
             margin-left: 10px;
+            
+            @media (--m) {
+              margin-top: 7px;
+            }
+
+            @media (--ml) {
+              margin-top: 0;
+              margin-left: 10px;
+            }
+
+            &:first-of-type {
+              margin-left: 0;
+            }
 
             .icon {
-              height: 20px;
-              width: 16px;
+              height: 15px;
+              width: 15px;
 
               &.icon--facebook {
                 width: 9px;
@@ -110,45 +139,118 @@
           text-transform: lowercase;
         }
 
-        &.card__details--studio {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-
-          .card__address {
-            span {
-              text-transform: capitalize;
-            }
-          }
-
-          .card__instructors {
-            width: 100%;
-            min-height: 82px;
-
-            a {
-              text-transform: capitalize;
-            }
-          }
+        span.card__empty {
+          text-transform: uppercase;
         }
 
         .card--item {
           width: 100%;
           padding-top: 15px;
-          padding-right: 10px;
           line-height: 1.5;
           hyphens: auto;
+
+          @media (--ml) {
+            padding-right: 10px;
+
+            &:nth-child(2n) {
+              padding-right: 0;
+            }
+          }
 
           a,
           span {
             word-wrap: anywhere;
           }
 
-          @media (--m) {
-            width: 50%;
-          }
-
           .card-item__label {
             line-height: 1.7;
+            margin-bottom: 2px;
+          }
+        }
+
+        &.card__details--studio {
+          display: grid;
+          grid-template-columns: 100%;
+          -ms-grid-columns: 100%;
+          -ms-grid-rows: auto auto auto;
+
+          @media (--ml) {
+            grid-template-columns: 60% 40%;
+            -ms-grid-columns: 60% 40%;
+          }
+
+          .card--item {
+            width: 100%;
+            grid-column-start: 1;
+
+            @media (--ml) {
+              &:nth-child(2n) {
+                grid-column-start: 2;
+              }
+            }
+          }
+
+          .card__address {
+            -ms-grid-row: 1;
+            -ms-grid-column: 1;
+            span {
+              text-transform: capitalize;
+            }
+          }
+
+          .card__site {
+            -ms-grid-row: 2;
+            -ms-grid-column: 1;
+          }
+
+          .card__email {
+            -ms-grid-row: 3;
+            -ms-grid-column: 1;
+          }
+
+          .card__phone {
+            -ms-grid-row: 4;
+            -ms-grid-column: 1;
+          }
+
+          .card__instructors {
+            grid-column-start: 1;
+            grid-column-end: 3;
+            -ms-grid-row: 5;
+            min-height: 82px;
+
+            a {
+              text-transform: capitalize;
+            }
+          }
+
+          @media (--ml) {
+            .card__address {
+              -ms-grid-row: 1;
+              -ms-grid-column: 1;
+            }
+
+            .card__site {
+              -ms-grid-row: 1;
+              -ms-grid-column: 2;
+            }
+
+            .card__email {
+              -ms-grid-row: 2;
+              -ms-grid-column: 1;
+            }
+
+            .card__phone {
+              -ms-grid-row: 2;
+              -ms-grid-column: 2;
+            }
+
+            .card__instructors {
+              grid-column-start: 1;
+              grid-column-end: 3;
+              -ms-grid-row: 3;
+              min-height: 82px;
+            }
           }
         }
       }
@@ -164,20 +266,21 @@
       }
 
       .card__certification-icons {
-        margin-top: 5px;
+        margin-top: 10px;
         width: 100%;
         display: flex;
         flex-direction: row;
+        min-height: 60px;
 
         .icon {
-          margin-right: 8px;
+          margin-right: 14px;
           width: 60px;
           height: 60px;
         }
       }
 
       .card__link {
-        margin-top: 15px;
+        margin-top: 20px;
 
         .button {
           width: 100%;

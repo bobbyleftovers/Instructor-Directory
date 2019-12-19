@@ -23,15 +23,36 @@ class Rest_Api extends WP_REST_Controller {
   protected $namespace;
 
   public function __construct() {
-    
     $this->namespace = 'bd-api/v1';
     $this->DB = new Db_Control();
+  }
+
+  public function register_actions () {
+    // register routing
     add_action('rest_api_init', array($this, 'register_routes'));
-    // add_action( 'rest_api_init', 'map_meta_fields' );
-  
+
+    // remove caching (pantheon)
+    // wp-json paths or any custom endpoints
+    $regex_json_path_patterns = array(
+      '#^/wp-json/wp/v2?#',
+      '#^/wp-json/?#',
+      '#^/wp-json/bd-api/v1?#'
+    );
+    foreach ($regex_json_path_patterns as $regex_json_path_pattern) {
+      if (preg_match($regex_json_path_pattern, $_SERVER['REQUEST_URI'])) {
+        add_filter( 'rest_post_dispatch', array($this, 'filter_rest_post_dispatch'), 10, 2 );
+      }
+      break;
+    }
+  }
+
+  public function filter_rest_post_dispatch( $response, $server ) {
+    // die(print_r($server));
+    $server->send_header( 'Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0' );
+    return $response;
   }
   
-  public function register_routes() {
+  public function register_routes () {
     // return multiple items
     register_rest_route(
       $this->namespace,
@@ -114,7 +135,7 @@ class Rest_Api extends WP_REST_Controller {
               'description'       => 'Add a radius to search within',
               'type'              => 'string',
               'validate_callback' => function($param, $request, $key) {
-                  return is_numeric( $param );
+                  return is_string( $param );
                 },
               'sanitize_callback' => 'absint'
             ),
@@ -122,25 +143,17 @@ class Rest_Api extends WP_REST_Controller {
               'description'       => 'Add latitude for centering geoloaction searches',
               'type'              => 'string',
               'validate_callback' => function($param, $request, $key) {
-                  return is_numeric( $param );
+                  return is_string( $param );
                 },
-              'sanitize_callback' => 'absint'
+              'sanitize_callback' => 'sanitize_text_field'
             ),
             'logitude' =>  array(
               'description'       => 'Add longitude for centering geoloaction searches',
               'type'              => 'string',
               'validate_callback' => function($param, $request, $key) {
-                  return is_numeric( $param );
+                  return is_string( $param );
                 },
-              'sanitize_callback' => 'absint' 
-            ),
-            'is_geo_query' =>  array(
-              'description'       => 'Add a radius to search within',
-              'type'              => 'bool',
-              'validate_callback' => function($param, $request, $key) {
-                  return is_bool( $param );
-                },
-              // 'sanitize_callback' => 'absint' 
+              'sanitize_callback' => 'sanitize_text_field' 
             )
           )
         )
@@ -202,7 +215,7 @@ class Rest_Api extends WP_REST_Controller {
         // date
         $instructor->date = get_the_date('c');
         // post meta/acf
-        $instructor->acf = $this->get_acf(get_the_ID());
+        // $instructor->acf = $this->get_acf(get_the_ID());
         // return the whole row from the custom table
         $instructor->row = $row_data;
         // certifications
@@ -212,10 +225,12 @@ class Rest_Api extends WP_REST_Controller {
 
         array_push($instructors, $instructor);
       }
+
       // return the post array
       $response = rest_ensure_response( $instructors );
       $response->header( 'X-WP-Total', (int) $total );
       $response->header( 'X-WP-TotalPages', (int) $pages );
+      $response->header( 'Cache', 'no-cache' );
       return $response;
     } else {
       return [];
@@ -293,7 +308,7 @@ class Rest_Api extends WP_REST_Controller {
         // date
         $studio->date = get_the_date('c');
         // post meta/acf
-        $studio->acf = $this->get_acf(get_the_ID());
+        // $studio->acf = $this->get_acf(get_the_ID());
         // return the whole row from the custom table
         $studio->row = $row;
         // languages
@@ -347,7 +362,7 @@ class Rest_Api extends WP_REST_Controller {
   
   public function delete_permissions_check ( $request ) {
   
-    return false;
+    return true;
   
   }
 
@@ -355,24 +370,5 @@ class Rest_Api extends WP_REST_Controller {
     $row = $this->DB->find($id);
     $row = $row[0];
     return $row;
-  }
-  public function get_acf($id) {
-  
-    include_once( ABSPATH . 'wp-admin/Classes/plugin.php' );
-  
-    // check if acf is active before doing anything
-    if( is_plugin_active('advanced-custom-fields-pro/acf.php') || is_plugin_active('advanced-custom-fields/acf.php') ) {
-  
-      // get fields
-      $acf_fields = get_fields($id);
-      // if we have fields
-      if( $acf_fields ) {
-        return $acf_fields;
-      }
-  
-    } else {
-       // no acf, return false
-       return false;
-    }
   }
 }

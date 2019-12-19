@@ -3,6 +3,7 @@
   import axios from 'axios'
   import Card from './Card'
   import MapView from './MapView'
+  import { delegate, scrollTop, getTopOffset } from '../../lib/dom'
 
   export default {
     mounted() {
@@ -17,12 +18,12 @@
       const urlParams = new URLSearchParams(window.location.search)
       return {
         filters: {
-          type: 'studio', // post type (instructor or studio)
+          type: 'instructor', // post type (instructor or studio)
           keyword: null, // title/name search term
           page: 1, // page #
           per_page: 12, // # of results per page (-1 for maps)
-          latitude: null, // used in geolocationqueries
-          longitude: null, // used in geolocationqueries
+          latitude: null, // used in geolocation queries
+          longitude: null, // used in geolocation queries
           location: null, // centers the map
           radius: null // location search radius
         },
@@ -33,7 +34,7 @@
         totalPages: 0,
         totalPosts: 0,
         errorMsg: null,
-      };
+      }
     },
     methods: {
       getParams: function () {
@@ -51,8 +52,8 @@
           type: this.filters.type,
           keyword: this.filters.keyword,
           location: this.filters.location,
-          latitude: this.filters.latitude,
-          longitude: this.filters.longitude,
+          latitude: `"${this.filters.latitude}"`,
+          longitude: `"${this.filters.longitude}"`,
           radius: this.filters.radius
         }
         if(this.filters.location){
@@ -67,8 +68,7 @@
           this.getCards()
           return
         }
-        axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURI(this.filters.location)}.json?access_token=pk.eyJ1Ijoicm9iZXJ0cmFlIiwiYSI6ImNqdndhOHFmejRhczYzeW9qYjJrMGQzY3QifQ.OZag22deq5xysi6cQuAEMw&limit=1`).then(res => {
-          console.log('Map Data: ',res.data)
+        axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURI(this.filters.location)}.json?access_token=${theme_vars.mapbox.key}&limit=1`).then(res => {
           if(res.data.features.length > 0) {
             this.filters.longitude = res.data.features[0].center[0]
             this.filters.latitude = res.data.features[0].center[1]
@@ -82,12 +82,9 @@
       getCards: function () {
         this.dataLoading = true
         this.errorMsg = null
-        // this.entries = null
         const params = this.getParams()
-        const url = '/wp-json/bd-api/v1/' + this.filters.type + '?' + params.toString()
-        console.log('DIR URL: ', url)
+        const url = '/wp-json/bd-api/v1/' + this.filters.type + '?' + params.toString() + '&v=' + this.getCacheBustStr()
         axios.get(url).then(res => {
-          console.log('DIR RESPONSE: ', res)
           this.entries = res.data
           this.totalPages = parseInt(res.headers['x-wp-totalpages'])
           this.totalPosts = parseInt(res.headers['x-wp-total'])
@@ -99,7 +96,11 @@
           if(this.filters.location) {
             this.showMap = true
           }
-        });
+
+          if(this.totalPages > 0){
+            scrollTop(getTopOffset(document.querySelector('#directory')) - 70)
+          }
+        })
       },
       dropdownToggle: function (menu) {
         document.querySelector('#' + menu).classList.toggle('open')
@@ -115,15 +116,17 @@
         if(pageNum === this.filters.page) return
         this.filters.page = pageNum
         this.handleSubmit()
-        
       },
+      getCacheBustStr: function () {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      }
     }
-  };
+  }
 </script>
 <template>
   <div class="directory__wrap">
     <div class="container">
-      <form class="directory-loop__filters" @submit.prevent="handleSubmit">
+      <form class="directory-loop__filters" @submit.prevent="handleSubmit" autocomplete="off">
         <div class="filter filter--type">
           <span class="filter--heading">Filter by:</span>
           <label class="filter__label label">
@@ -141,9 +144,9 @@
         </div>
         <div class="filter-divider"></div>
         <div class="filter filter--keyword">
-          <label class="filter__label label" for="keyword">Instructor/Studio Name</label>
+          <label class="filter__label label" for="password">{{'Instructor/Studio Name'}}</label>
           <div class="input-icon">
-            <input class="input input__text w-100" name="keyword" type="text" v-model="filters.keyword" placeholder="i.e. Lara Heimann"/>
+            <input class="input input__text w-100" type="text" v-model="filters.keyword" placeholder='i.e. "Lara Heimann"' autocomplete="off"/>
             <div class="icon icon--search contain" />
           </div>
         </div>
@@ -151,9 +154,9 @@
           <span class="filter-copy__copy">and/or</span>
         </div>
         <div class="filter filter--city">
-          <label class="filter__label label" for="place">City, State or Zip</label>
+          <label class="filter__label label" for="username">Location</label>
           <div class="input-icon">
-            <input class="input input__text w-100" name="place" type="text" v-model="filters.location" placeholder="Princeton, NJ"/>
+            <input class="input input__text w-100" type="text" v-model="filters.location" placeholder='i.e "Princeton, NJ"' autocomplete="off"/>
             <span class="icon icon--search contain" />
           </div>
         </div>
@@ -179,7 +182,7 @@
         </div>
       </form>
     </div>
-    <div class="directory__results">
+    <div id="directory" class="directory__results">
       <div class="container">
         <div class="directory__errors" v-if="errorMsg">
           <span class="label">No Results Found</span>
@@ -196,14 +199,13 @@
           :centerLng="filters.longitude"
           :type="params.type"
         />
-        <div class="directory__cards" v-if="this.entries.length > 0">
+        <div class="directory__cards" v-bind:class="{'paged' : totalPages > 1}" v-if="this.entries.length > 0">
           <card
             v-for="(entry, i) in this.entries"
             :key="i"
             :title="entry.title"
             :image="entry.image"
             :certifications="(entry.certification) ? entry.certification : []"
-            :meta="entry.acf"
             :row="entry.row"
             :email="entry.row.contact_info_email"
             :route="entry.permalink"
@@ -211,7 +213,7 @@
             :class="'card' + ' card--' + entry.row.post_type"
           />
         </div>
-        <div class="directory__pagination container" v-if="!filters.location && this.entries.length > 0">
+        <div class="directory__pagination container" v-if="!filters.location && this.entries.length > 0 && this.totalPages > 1">
           <span class="directory__pagination-link link--prev" v-if="filters.page > 1" v-on:click="paginationClick(filters.page - 1)">Previous</span>
           <ul v-if="totalPages > 2">
             <li v-for="(n,i) in totalPages" :key="i" :class="{ active: filters.page === n }" class="directory__pagination-link" v-on:click="paginationClick(n)"> {{n}} </li>

@@ -1,0 +1,123 @@
+.barrel-directory__container {
+  .fieldset {
+    border: 0;
+    padding: 0;
+  }
+
+  .label {
+    font-size: 9px;
+
+    @media (--xl) {
+      font-size: 10px;
+    }
+  }
+
+  .error,
+  .error-msg {
+    color: var(--c-red);
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .form-error__span {
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  textarea,
+  &[type="url"],
+  input[type="text"],
+  input[type="search"],
+  input[type="password"],
+  select {
+    font: 400 12px raleway, Helvetica neue, Helvetica, Arial, sans-serif !important;
+    line-height: 1.8rem !important;
+
+    @media (--m) {
+      font: 400 13px raleway, Helvetica neue, Helvetica, Arial, sans-serif !important;
+      line-height: 1.8rem !important;
+    }
+  }
+
+  input {
+    padding: 0.55em 1em;
+    border: 1px solid var(--c-med-grey);
+
+    &[type="url"],
+    &[type="text"],
+    &[type="search"],
+    &[type="password"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    &[type="radio"],
+    &[type="checkbox"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      display: inline-block;
+      position: relative;
+      height: 14px;
+      width: 14px;
+      background-color: var(--c-white);
+      border: 1px solid var(--c-dark-grey);
+      padding: 0;
+      cursor: pointer;
+      margin-right: 7px;
+      outline: none;
+      transition: border 0.25s ease-out;
+
+      &:disabled {
+        border: 1px solid var(--c-med-grey);
+      }
+
+      &:checked::before {
+        position: absolute;
+        content: '';
+        top: 2px;
+        left: 2px;
+        width: 8px;
+        height: 8px;
+        background: var(--c-red);
+      }
+    }
+
+    &[type="radio"] {
+      border-radius: 100%;
+
+      &:checked::before {
+        border-radius: 100%;
+      }
+    }
+
+    &.error,
+    &.form-error__input {
+      outline: 1px solid red;
+    }
+
+    @media (--m) {
+      padding: 1em;
+      font-size: 13px;
+    }
+
+    @media (--xl) {
+      font-size: 14px;
+    }
+  }
+
+  /* remove autofill icons from safari */
+  input::-webkit-contacts-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+  }
+}

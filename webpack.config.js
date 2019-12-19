@@ -4,7 +4,8 @@ const path = require('path')
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: {
-    main: ['@babel/polyfill', './src/main.scss', './src/main.js']
+    main: ['@babel/polyfill', './src/main.scss', './src/main.js'],
+    admin: ['./src/admin/admin.js']
   },
   output: {
     path: path.join(__dirname, 'assets/'),
